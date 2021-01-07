@@ -11,8 +11,6 @@ namespace Loots.Repository.DatabaseMethods
     public class PlayersMethods : IPlayers
     {
         private readonly PlayersContext _context;
-
-
         public PlayersMethods(PlayersContext context)
         {
             _context = context;

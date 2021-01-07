@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Loots.Models;
 using Loots.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +28,5 @@ namespace Loots.Controllers
         //     var floor = _floorsRepository.AddPlayers(player);
         //     return Ok(floor);
         // }
-
     }
 }

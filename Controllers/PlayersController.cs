@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Loots.Models;
-using Loots.Repository.Context;
 using Loots.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 

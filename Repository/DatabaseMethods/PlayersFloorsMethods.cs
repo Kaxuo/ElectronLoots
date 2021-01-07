@@ -18,7 +18,6 @@ namespace Loots.Repository.DatabaseMethods
             var players = _context.PlayersFloors.Include(s => s.Floors);
             return players;
         }
-
         public IEnumerable<PlayersFloors> UpdateTable()
         {
             throw new System.NotImplementedException();

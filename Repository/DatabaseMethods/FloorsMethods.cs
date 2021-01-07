@@ -14,11 +14,6 @@ namespace Loots.Repository.DatabaseMethods
         {
             _context = context;
         }
-
-        public FloorsMethods()
-        {
-        }
-
         public IEnumerable<Floors> GetAllFloors()
         {
             var floors = _context.Floors.Include(s => s.Players);
@@ -35,7 +30,6 @@ namespace Loots.Repository.DatabaseMethods
             var floors = _context.Floors;
             return floors;
         }
-
         public void DeleteFloor(int id)
         {
             var floor = _context.Floors.Find(id);
