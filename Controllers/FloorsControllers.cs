@@ -9,32 +9,26 @@ namespace Loots.Controllers
     [ApiController]
     public class FloorsControllers : ControllerBase
     {
+        private readonly IPlayers _playersRepository;
         private readonly IFloors _floorsRepository;
-        public FloorsControllers(IFloors floors)
+        public FloorsControllers(IPlayers players, IFloors floors)
         {
+            _playersRepository = players;
             _floorsRepository = floors;
         }
 
         [HttpGet]
-        public ActionResult<object> GetPlayers()
+        public ActionResult<Floors> GetPlayers()
         {
             var floors = _floorsRepository.GetAllFloors();
             return Ok(floors);
         }
-
-        [HttpPost("add")]
-        public ActionResult<Floors> AddPlayer(Floors floor)
-        {
-            var floors = _floorsRepository.AddFloors(floor);
-            return Ok(floors);
-        }
-
-        [HttpDelete("{id}")]
-        public ActionResult<IEnumerable<Floors>> DeletePlayer(int id)
-        {
-            _floorsRepository.DeleteFloor(id);
-            return Ok();
-        }
+        // [HttpPost("addplayers")]
+        // public ActionResult<Players> AddPlayers(Players player)
+        // {
+        //     var floor = _floorsRepository.AddPlayers(player);
+        //     return Ok(floor);
+        // }
 
     }
 }

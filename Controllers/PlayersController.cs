@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using Loots.Models;
+using Loots.Repository.Context;
 using Loots.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,14 +11,16 @@ namespace Loots.Controllers
     [ApiController]
     public class PlayersController : ControllerBase
     {
+        private readonly IFloors _floorsRepository;
         private readonly IPlayers _playersRepository;
-        public PlayersController(IPlayers players)
+        public PlayersController(IPlayers players, IFloors floors)
         {
             _playersRepository = players;
+            _floorsRepository = floors;
         }
 
         [HttpGet]
-        public ActionResult<object> GetPlayers()
+        public ActionResult<Players> GetPlayers()
         {
             var players = _playersRepository.GetAllPlayers();
             return Ok(players);
@@ -34,6 +38,21 @@ namespace Loots.Controllers
         {
             _playersRepository.DeletePlayer(id);
             return Ok();
+        }
+
+        [HttpPost("addfloors")]
+        public ActionResult<Players> AddFloors(Floors floor)
+        {
+            var players = _playersRepository.GetAllPlayers();
+            if (players == null || !players.Any())
+            {
+                _floorsRepository.AddFloors(floor);
+            }
+            if (players.Any())
+            {
+                _playersRepository.AddFloors(floor);
+            }
+            return Ok(players);
         }
     }
 }

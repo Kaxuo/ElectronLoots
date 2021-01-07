@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Loots.Models
 {
@@ -8,11 +9,11 @@ namespace Loots.Models
     {
         public Floors()
         {
-            Players = new List<Players>();
+            Players = new List<PlayersFloors>();
         }
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Players> Players { get; set; }
+        public List<PlayersFloors> Players { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Loots.Models;
 using Loots.Repository.Context;
 using Loots.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace Loots.Repository.DatabaseMethods
 {
@@ -13,9 +14,14 @@ namespace Loots.Repository.DatabaseMethods
         {
             _context = context;
         }
+
+        public FloorsMethods()
+        {
+        }
+
         public IEnumerable<Floors> GetAllFloors()
         {
-            var floors = _context.Floors;
+            var floors = _context.Floors.Include(s => s.Players);
             return floors;
         }
         public IEnumerable<Floors> AddFloors(Floors floor)
@@ -40,5 +46,14 @@ namespace Loots.Repository.DatabaseMethods
             _context.Floors.Remove(floor);
             _context.SaveChanges();
         }
+
+        // public Floors AddPlayers(Players player)
+        // {
+        //     var singleFloor = _context.Floors.Find(1);
+        //     singleFloor.Players.Add(player);
+        //     _context.Update(singleFloor);
+        //     _context.SaveChanges();
+        //     return singleFloor;
+        // }
     }
 }
