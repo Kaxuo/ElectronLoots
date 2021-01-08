@@ -6,6 +6,7 @@ namespace Loots.Repository.Interface
     public interface IPlayersFloors
     {
         IEnumerable<PlayersFloors> GetTable();
-        IEnumerable<PlayersFloors> UpdateTable();
+        PlayersFloors GetSingleData(int userId, int floorId);
+        PlayersFloors UpdateTable(int userId, int floorId, int value);
     }
 }

@@ -12,6 +12,6 @@ namespace Loots.Models
         public string FloorName { get; set; }
         [JsonIgnore]
         public Floors Floors { get; set; }
-        public int value { get; set; } = 0;
+        public int Value { get; set; } = 0;
     }
 }

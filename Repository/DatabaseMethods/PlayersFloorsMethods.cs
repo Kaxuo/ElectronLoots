@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using BackEnd;
+using BackEnd.Exceptions;
 using Loots.Models;
 using Loots.Repository.Context;
 using Loots.Repository.Interface;
@@ -13,14 +15,41 @@ namespace Loots.Repository.DatabaseMethods
         {
             _context = context;
         }
+
         public IEnumerable<PlayersFloors> GetTable()
         {
             var players = _context.PlayersFloors.Include(s => s.Floors);
             return players;
         }
-        public IEnumerable<PlayersFloors> UpdateTable()
+
+        public PlayersFloors GetSingleData(int userId, int floorId)
         {
-            throw new System.NotImplementedException();
+            var player = _context.PlayersFloors.Find(userId, floorId);
+            if (player == null)
+            {
+                throw new NotFoundException("User or floor do not match, try again");
+            }
+            return player;
+        }
+
+        public PlayersFloors UpdateTable(int userId, int floorId, int value)
+        {
+            var player = _context.PlayersFloors.Find(userId, floorId);
+            if (player == null)
+            {
+                throw new NotFoundException("User or floor do not match, try again");
+            }
+            if (value < 0)
+            {
+                player.Value = 0;
+            }
+            else
+            {
+                player.Value = value;
+            }
+            _context.PlayersFloors.Update(player);
+            _context.SaveChanges();
+            return player;
         }
     }
 }

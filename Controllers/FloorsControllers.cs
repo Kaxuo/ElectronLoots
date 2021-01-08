@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using BackEnd.Exceptions;
 using Loots.Models;
 using Loots.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -8,11 +11,9 @@ namespace Loots.Controllers
     [ApiController]
     public class FloorsControllers : ControllerBase
     {
-        private readonly IPlayers _playersRepository;
         private readonly IFloors _floorsRepository;
-        public FloorsControllers(IPlayers players, IFloors floors)
+        public FloorsControllers(IFloors floors)
         {
-            _playersRepository = players;
             _floorsRepository = floors;
         }
 
@@ -22,11 +23,23 @@ namespace Loots.Controllers
             var floors = _floorsRepository.GetAllFloors();
             return Ok(floors);
         }
-        // [HttpPost("addplayers")]
-        // public ActionResult<Players> AddPlayers(Players player)
-        // {
-        //     var floor = _floorsRepository.AddPlayers(player);
-        //     return Ok(floor);
-        // }
+
+        [HttpDelete("{id}")]
+        public ActionResult<IEnumerable<Floors>> DeleteFloor(int id)
+        {
+            try
+            {
+                _floorsRepository.DeleteFloor(id);
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }
