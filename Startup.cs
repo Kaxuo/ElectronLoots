@@ -37,6 +37,7 @@ namespace Loots
             services.AddControllers();
             services.AddScoped<IPlayers, PlayersMethods>();
             services.AddScoped<IFloors, FloorsMethods>();
+            services.AddScoped<IPlayersFloors, PlayersFloorsMethods>();
             services.AddEntityFrameworkSqlite().AddDbContext<PlayersContext>();
         }
 

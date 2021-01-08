@@ -6,7 +6,8 @@ namespace Loots.Repository.Interface
     public interface IPlayers
     {
         IEnumerable<Players> GetAllPlayers();
-        IEnumerable<Players> AddPlayer(Players player);
+        IEnumerable<Players> AddPlayers(Players player);
         void DeletePlayer(int id);
+        IEnumerable<Players> AddFloors(Floors floor);
     }
 }
