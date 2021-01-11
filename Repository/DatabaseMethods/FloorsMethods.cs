@@ -34,7 +34,7 @@ namespace Loots.Repository.DatabaseMethods
             var floors = _context.Floors;
             return floors;
         }
-        
+
         public void DeleteFloor(int id)
         {
             var floor = _context.Floors.Find(id);
@@ -56,7 +56,7 @@ namespace Loots.Repository.DatabaseMethods
             foreach (Floors singleFloor in floors)
             {
                 var newPlayer = new PlayersFloors { PlayerName = player.Name, Players = player, FloorName = singleFloor.Name, Floors = singleFloor };
-                var single = _context.Floors.Find(singleFloor.Id);
+                var single = _context.Floors.Find(singleFloor.FloorId);
                 single.Players.Add(newPlayer);
                 _context.Update(single);
                 _context.SaveChanges();

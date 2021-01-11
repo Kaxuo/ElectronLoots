@@ -1,0 +1,50 @@
+<div class="body">
+  <div class="container">
+    <div class="buttons">
+      <button mat-button class="first-button" mat-raised-button color="primary">
+        Add Columns
+      </button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th class="column-players">Players</th>
+          <th *ngFor="let el of floors">{{ el.name }}</th>
+          <th class="column-players">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let el of players">
+          <td class="players-rows">{{ el.name }}</td>
+          <td *ngFor="let floor of el.floors">{{ floor.value }}</td>
+          <td class="total-rows">{{ el.total }}</td>
+        </tr>
+        <tr class="new-player" (click)="showPlayers()">
+          <td class="players-rows">New Player</td>
+          <td *ngFor="let el of floors">???</td>
+          <td class="total-rows">???</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<form
+  class="modal"
+  *ngIf="addPlayers == true"
+  [ngClass]="{ isShow: addPlayers }"
+>
+  <div class="content">
+    <h2>Add Players</h2>
+    <input class="input" />
+    <button
+      (click)="closeModal()"
+      mat-button
+      class="first-button"
+      mat-raised-button
+      color="primary"
+    >
+      Close
+    </button>
+  </div>
+</form>

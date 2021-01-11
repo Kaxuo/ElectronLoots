@@ -57,7 +57,7 @@ namespace Loots.Repository.DatabaseMethods
             foreach (Players singlePlayer in players)
             {
                 var newFloor = new PlayersFloors { PlayerName = singlePlayer.Name, Players = singlePlayer, FloorName = floor.Name, Floors = floor };
-                var single = _context.Players.Find(singlePlayer.userId);
+                var single = _context.Players.Find(singlePlayer.UserId);
                 single.Floors.Add(newFloor);
                 _context.Update(single);
                 _context.SaveChanges();

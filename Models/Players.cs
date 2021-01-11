@@ -10,7 +10,7 @@ namespace Loots.Models
             Floors = new List<PlayersFloors>();
         }
         [Key]
-        public int userId { get; set; }
+        public int UserId { get; set; }
         public string Name { get; set; }
         public List<PlayersFloors> Floors { get; set; }
     }

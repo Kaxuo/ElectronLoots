@@ -1,0 +1,132 @@
+.body {
+  height: 90vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h2 {
+  text-align: center;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: white;
+  padding: 30px 0;
+}
+
+table {
+  text-align: center;
+  min-width: 40vw;
+  max-width: 90vw;
+  border-collapse: collapse;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  font-size: 20px;
+  line-height: 30px;
+}
+
+th {
+  text-align: center;
+}
+
+thead {
+  th {
+    background-color: #55608f;
+  }
+}
+
+tbody {
+  tr {
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+  td {
+    position: relative;
+    &:hover {
+      &:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -9999px;
+        bottom: -9999px;
+        background-color: rgba(255, 255, 255, 0.2);
+        z-index: -1;
+      }
+    }
+  }
+}
+
+.column-players {
+  background-color: #384e5f !important;
+}
+
+.players-rows,
+.total-rows {
+  color: white;
+  background-color: rgb(92, 209, 163, 0.8) !important;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px 0px;
+  .first-button {
+    padding: 0px 100px;
+  }
+}
+
+.new-player {
+  cursor: pointer;
+  border: 3px outset black;
+}
+
+.isShown {
+  display: block;
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 200%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  animation-name: animatetop;
+  animation-duration: 1s;
+  .content {
+    background-color: white;
+    margin: 15% 35%;
+    height: 250px;
+    display: flex;
+    padding: 35px;
+    flex-direction: column;
+    h2 {
+      color: black ;
+    }
+  }
+}
+
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
