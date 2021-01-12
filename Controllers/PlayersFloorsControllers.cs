@@ -79,7 +79,7 @@ namespace Loots.Controllers
                 {
                     _floorsRepository.AddPlayers(player);
                 }
-                return Ok(floors);
+                return Ok(player);
             }
             catch (Exception ex)
             {
@@ -101,7 +101,7 @@ namespace Loots.Controllers
                 {
                     _playersRepository.AddFloors(floor);
                 }
-                return Ok(players);
+                return Ok(floor);
             }
             catch (Exception ex)
             {

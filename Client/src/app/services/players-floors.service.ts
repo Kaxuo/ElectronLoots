@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Players } from '../Models/Players';
 import { WebRequestService } from './web-request.service';
 
 @Injectable({
@@ -21,5 +22,13 @@ export class PlayersFloorsService {
 
   deleteFloors(id: number) {
     return this.webRequest.deleteFloors(id);
+  }
+
+  addPlayers(payload: Players) {
+    return this.webRequest.addPlayers(payload);
+  }
+
+  addFloors(payload: Players) {
+    return this.webRequest.addFloors(payload);
   }
 }

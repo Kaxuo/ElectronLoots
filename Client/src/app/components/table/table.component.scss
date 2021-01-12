@@ -1,9 +1,9 @@
 .body {
-  height: 90vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  min-height: 90vh;
+}
+
+.container {
+  margin-top: 15vh;
 }
 
 h2 {
@@ -12,23 +12,21 @@ h2 {
   text-transform: uppercase;
   letter-spacing: 1px;
   color: white;
-  padding: 30px 0;
+  padding: 5px 0;
 }
 
 table {
+  margin: auto;
   text-align: center;
-  min-width: 40vw;
-  max-width: 90vw;
   border-collapse: collapse;
-  overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 th,
 td {
-  padding: 20px;
+  padding: 15px;
   background-color: rgba(255, 255, 255, 0.8);
-  font-size: 20px;
+  font-size: 15px;
   line-height: 30px;
 }
 
@@ -84,9 +82,38 @@ tbody {
   }
 }
 
+.delete-players {
+  background-color: coral !important;
+}
+
+.delete-pl {
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.delete-col {
+  display: block;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.delete-rows {
+  background-color: #dc143c;
+}
+
 .new-player {
   cursor: pointer;
-  border: 3px outset black;
+  td:first-child,
+  td:last-child {
+    font-weight: bold;
+    background-color: #384e5f;
+  }
+  .random {
+    background-color: #55608f;
+  }
+  &:hover {
+    border: 2px solid black;
+  }
 }
 
 .isShown {
@@ -109,13 +136,20 @@ tbody {
   animation-duration: 1s;
   .content {
     background-color: white;
-    margin: 15% 35%;
+    margin: 10% 35%;
     height: 250px;
     display: flex;
     padding: 35px;
     flex-direction: column;
+    border: 2px outset black;
     h2 {
-      color: black ;
+      color: black;
+    }
+    .field {
+      margin: 10px 0px;
+    }
+    .first-button {
+      margin: 5px 0px;
     }
   }
 }

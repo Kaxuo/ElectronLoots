@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { TableComponent } from './components/table/table.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [AppComponent, TableComponent],
@@ -20,6 +22,8 @@ import { MatButtonModule } from '@angular/material/button';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    MatInputModule,
+    MatFormFieldModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

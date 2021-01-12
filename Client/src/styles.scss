@@ -1,4 +1,4 @@
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
 
 @keyframes move-background {
   from {
@@ -37,7 +37,7 @@
 
 .background-container {
   position: fixed;
-  z-index:-1;
+  z-index: -1;
   top: 0;
   left: 0;
   bottom: 0;
@@ -98,3 +98,7 @@ img {
   right: 20px;
 }
 
+em {
+  color: red;
+  display: flex;
+}
