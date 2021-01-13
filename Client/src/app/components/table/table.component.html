@@ -1,0 +1,159 @@
+<div class="body">
+  <div class="container">
+    <div class="buttons">
+      <button
+        (click)="showFloors()"
+        mat-button
+        class="first-button"
+        mat-raised-button
+        color="primary"
+      >
+        Add Column
+      </button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th class="column-players">Players</th>
+          <th class="column-title" *ngFor="let el of floors">
+            {{ el.name }}
+            <span
+              class="material-icons delete-col"
+              mwlConfirmationPopover
+              popoverTitle="Are you sure you want to delete {{ el.name }} ?"
+              placement="right"
+              (confirm)="deleteColumn(el)"
+              (cancel)="cancelClicked = true"
+            >
+              delete_forever
+            </span>
+          </th>
+          <th class="column-players">Total</th>
+          <th class="delete-players">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let el of players; let indexPlayer = index">
+          <td class="players-rows">{{ el.name }}</td>
+          <td *ngFor="let floor of el.floors; let indexFloor = index">
+            <mat-form-field class="mat-input">
+              <input
+                (input)="modifyValue(floor, $event, indexPlayer, indexFloor)"
+                matInput
+                type="number"
+                name="value"
+                [value]="floor.value"
+                min="0"
+              />
+            </mat-form-field>
+          </td>
+          <td class="total-rows">{{ el.total }}</td>
+          <td class="delete-rows">
+            <span
+              mwlConfirmationPopover
+              popoverTitle="Are you sure you want to delete {{ el.name }} ?"
+              placement="right"
+              (confirm)="deletePlayers(el)"
+              (cancel)="cancelClicked = true"
+              class="material-icons delete-pl"
+            >
+              delete_forever
+            </span>
+          </td>
+        </tr>
+        <tr class="new-player" (click)="showPlayers()">
+          <td>Add Players</td>
+          <td *ngFor="let el of floors" class="random">0</td>
+          <td class="column-players">0</td>
+          <td class="delete-players">/////</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<form
+  class="modal"
+  *ngIf="modalAddPlayer == true"
+  [ngClass]="{ isShow: modalAddPlayer }"
+  (ngSubmit)="addPlayer(addPlayerForm.value)"
+  [formGroup]="addPlayerForm"
+>
+  <div class="content">
+    <h2>New Player</h2>
+    <mat-form-field class="field" appearance="fill">
+      <mat-label>Player's Name</mat-label>
+      <input #playerForm matInput formControlName="name" autofocus />
+    </mat-form-field>
+    <em
+      style="margin-bottom: 10px; padding-left: 60px"
+      *ngIf="
+        addPlayerForm.get('name').hasError('maxlength') &&
+        addPlayerForm.get('name').touched
+      "
+      >Too Long !
+    </em>
+    <button
+      [disabled]="addPlayerForm.invalid"
+      type="submit"
+      mat-button
+      class="first-button"
+      mat-raised-button
+      color="primary"
+    >
+      Create
+    </button>
+    <button
+      (click)="closeModal()"
+      mat-button
+      class="first-button"
+      mat-raised-button
+      color="warn"
+    >
+      Close
+    </button>
+  </div>
+</form>
+
+<form
+  class="modal"
+  *ngIf="modalAddFloor == true"
+  [ngClass]="{ isShow: modalAddFloor }"
+  (ngSubmit)="addFloor(addFloorForm.value)"
+  [formGroup]="addFloorForm"
+>
+  <div class="content">
+    <h2>New Floor</h2>
+    <mat-form-field class="field" appearance="fill">
+      <mat-label>Floor's title</mat-label>
+      <input matInput #floorForm formControlName="name" />
+    </mat-form-field>
+    <em
+      style="margin-bottom: 10px; padding-left: 60px"
+      *ngIf="
+        addFloorForm.get('name').hasError('maxlength') &&
+        addFloorForm.get('name').touched
+      "
+      >Too Long !
+    </em>
+    <button
+      [disabled]="addFloorForm.invalid"
+      type="submit"
+      mat-button
+      class="first-button"
+      mat-raised-button
+      color="primary"
+    >
+      Create
+    </button>
+    <button
+      (click)="closeModal()"
+      mat-button
+      class="first-button"
+      mat-raised-button
+      color="warn"
+    >
+      Close
+    </button>
+  </div>
+</form>

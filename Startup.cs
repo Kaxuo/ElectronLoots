@@ -37,7 +37,14 @@ namespace Loots
             services.AddControllers();
             services.AddScoped<IPlayers, PlayersMethods>();
             services.AddScoped<IFloors, FloorsMethods>();
+            services.AddScoped<IPlayersFloors, PlayersFloorsMethods>();
             services.AddEntityFrameworkSqlite().AddDbContext<PlayersContext>();
+            services.AddCors(options =>
+            options.AddPolicy("AllowAnyone", 
+            builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +54,7 @@ namespace Loots
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("AllowAnyone");
             Task.Run(async () => await Electron.WindowManager.CreateWindowAsync());
             app.UseHttpsRedirection();
             app.UseRouting();

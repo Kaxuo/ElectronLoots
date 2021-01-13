@@ -8,5 +8,6 @@ namespace Loots.Repository.Interface
         IEnumerable<Floors> GetAllFloors();
         IEnumerable<Floors> AddFloors(Floors floor);
         void DeleteFloor(int id);
+        IEnumerable<Floors> AddPlayers(Players player);
     }
 }

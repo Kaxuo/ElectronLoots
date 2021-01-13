@@ -1,0 +1,166 @@
+.body {
+  min-height: 90vh;
+}
+
+.container {
+  margin-top: 15vh;
+}
+
+h2 {
+  text-align: center;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: white;
+  padding: 5px 0;
+}
+
+table {
+  margin: auto;
+  text-align: center;
+  border-collapse: collapse;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
+  line-height: 30px;
+}
+
+th {
+  text-align: center;
+}
+
+thead {
+  th {
+    background-color: #6495ED;
+  }
+}
+
+tbody {
+  tr {
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+  td {
+    position: relative;
+    &:hover {
+      &:before {
+        background-color: rgba(255, 255, 255, 0.2);
+        z-index: -1;
+      }
+    }
+  }
+}
+
+.column-players {
+  background-color: #384e5f !important;
+}
+
+.players-rows,
+.total-rows {
+  color: white;
+  background-color: rgb(92, 209, 163, 0.8) !important;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px 0px;
+  .first-button {
+    padding: 0px 100px;
+  }
+}
+
+.delete-players {
+  background-color: coral !important;
+}
+
+.delete-pl {
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.delete-col {
+  display: block;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.delete-rows {
+  background-color: #dc143c;
+}
+
+.new-player {
+  cursor: pointer;
+  td:first-child,
+  td:last-child {
+    font-weight: bold;
+    background-color: #384e5f;
+  }
+  .random {
+    background-color: #6495ED;
+  }
+  &:hover {
+    color: white;
+  }
+}
+
+.mat-input {
+  width: 70px;
+  text-align: center;
+  margin: auto;
+}
+
+.isShown {
+  display: block;
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 200%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  animation-name: animatetop;
+  animation-duration: 1s;
+  .content {
+    background-color: white;
+    margin: 10% 35%;
+    height: 300px;
+    display: flex;
+    padding: 35px;
+    flex-direction: column;
+    border: 2px outset black;
+    h2 {
+      color: black;
+    }
+    .field {
+      margin: 10px 0px;
+    }
+    .first-button {
+      margin: 5px 0px;
+    }
+  }
+}
+
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}

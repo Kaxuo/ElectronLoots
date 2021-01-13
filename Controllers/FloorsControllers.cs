@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using BackEnd.Exceptions;
 using Loots.Models;
 using Loots.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -16,25 +18,28 @@ namespace Loots.Controllers
         }
 
         [HttpGet]
-        public ActionResult<object> GetPlayers()
+        public ActionResult<Floors> GetPlayers()
         {
             var floors = _floorsRepository.GetAllFloors();
             return Ok(floors);
         }
 
-        [HttpPost("add")]
-        public ActionResult<Floors> AddPlayer(Floors floor)
-        {
-            var floors = _floorsRepository.AddFloors(floor);
-            return Ok(floors);
-        }
-
         [HttpDelete("{id}")]
-        public ActionResult<IEnumerable<Floors>> DeletePlayer(int id)
+        public ActionResult<IEnumerable<Floors>> DeleteFloor(int id)
         {
-            _floorsRepository.DeleteFloor(id);
-            return Ok();
+            try
+            {
+                _floorsRepository.DeleteFloor(id);
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
-
     }
 }

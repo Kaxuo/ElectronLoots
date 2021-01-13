@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
 namespace Loots.Models
@@ -6,10 +7,11 @@ namespace Loots.Models
     {
         public Players()
         {
-            Floors = new List<Floors>();
+            Floors = new List<PlayersFloors>();
         }
-        public int Id { get; set; }
+        [Key]
+        public int UserId { get; set; }
         public string Name { get; set; }
-        public List<Floors> Floors { get; set; }
+        public List<PlayersFloors> Floors { get; set; }
     }
 }
