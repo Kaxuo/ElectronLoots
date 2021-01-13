@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { forkJoin, throwError } from 'rxjs';
 import { Floors } from 'src/app/Models/Floors';
 import { Players } from 'src/app/Models/Players';
@@ -12,6 +12,10 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
+  @ViewChild('playerForm') playerForm;
+  @ViewChild('floorForm') floorForm;
+  confirmClicked = false;
+  cancelClicked = false;
   players: Players[] = [];
   floors: Floors[] = [];
   addPlayerForm = this.fb.group({
@@ -92,36 +96,43 @@ export class TableComponent implements OnInit {
 
   showPlayers() {
     this.modalAddPlayer = true;
+    setTimeout(() => {
+      this.playerForm.nativeElement.focus();
+    }, 200);
   }
 
   showFloors() {
     this.modalAddFloor = true;
+    setTimeout(() => {
+      this.floorForm.nativeElement.focus();
+    }, 200);
   }
 
   deletePlayers(el) {
-    if (confirm(`Are you sure you want to delete ${el.name}`)) {
-      this.PlayersFloors.deletePlayers(el.userId).subscribe(() => {
-        this.players = this.players.filter(
-          (player) => player.userId != el.userId
-        );
-      });
-    }
+    this.PlayersFloors.deletePlayers(el.userId).subscribe(() => {
+      this.confirmClicked = true;
+      this.players = this.players.filter(
+        (player) => player.userId != el.userId
+      );
+    });
   }
 
   deleteColumn(el) {
-    if (confirm(`Are you sure you want to delete the ${el.name}`)) {
-      this.PlayersFloors.deleteFloors(el.floorId).subscribe(() => {
-        this.floors = this.floors.filter(
+    this.PlayersFloors.deleteFloors(el.floorId).subscribe(() => {
+      this.floors = this.floors.filter((floor) => floor.floorId != el.floorId);
+      this.players = this.players.map((player) => {
+        let newFloor = player.floors.filter(
           (floor) => floor.floorId != el.floorId
         );
-        this.players = this.players.map((player) => {
-          let newFloor = player.floors.filter(
-            (floor) => floor.floorId != el.floorId
-          );
-          return { ...player, floors: newFloor };
-        });
+        return {
+          ...player,
+          floors: newFloor,
+          total: newFloor
+            .map((floor) => floor.value)
+            .reduce((a, b) => a + b, 0),
+        };
       });
-    }
+    });
   }
 
   closeModal() {

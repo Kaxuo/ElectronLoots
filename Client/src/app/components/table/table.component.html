@@ -17,7 +17,14 @@
           <th class="column-players">Players</th>
           <th class="column-title" *ngFor="let el of floors">
             {{ el.name }}
-            <span class="material-icons delete-col" (click)="deleteColumn(el)">
+            <span
+              class="material-icons delete-col"
+              mwlConfirmationPopover
+              popoverTitle="Are you sure you want to delete {{ el.name }} ?"
+              placement="right"
+              (confirm)="deleteColumn(el)"
+              (cancel)="cancelClicked = true"
+            >
               delete_forever
             </span>
           </th>
@@ -42,7 +49,14 @@
           </td>
           <td class="total-rows">{{ el.total }}</td>
           <td class="delete-rows">
-            <span class="material-icons delete-pl" (click)="deletePlayers(el)">
+            <span
+              mwlConfirmationPopover
+              popoverTitle="Are you sure you want to delete {{ el.name }} ?"
+              placement="right"
+              (confirm)="deletePlayers(el)"
+              (cancel)="cancelClicked = true"
+              class="material-icons delete-pl"
+            >
               delete_forever
             </span>
           </td>
@@ -69,7 +83,7 @@
     <h2>New Player</h2>
     <mat-form-field class="field" appearance="fill">
       <mat-label>Player's Name</mat-label>
-      <input matInput formControlName="name" />
+      <input #playerForm matInput formControlName="name" autofocus />
     </mat-form-field>
     <em
       style="margin-bottom: 10px; padding-left: 60px"
@@ -112,7 +126,7 @@
     <h2>New Floor</h2>
     <mat-form-field class="field" appearance="fill">
       <mat-label>Floor's title</mat-label>
-      <input matInput formControlName="name" />
+      <input matInput #floorForm formControlName="name" />
     </mat-form-field>
     <em
       style="margin-bottom: 10px; padding-left: 60px"

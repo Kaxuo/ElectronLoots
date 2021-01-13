@@ -36,7 +36,7 @@ th {
 
 thead {
   th {
-    background-color: #55608f;
+    background-color: #6495ED;
   }
 }
 
@@ -103,10 +103,10 @@ tbody {
     background-color: #384e5f;
   }
   .random {
-    background-color: #55608f;
+    background-color: #6495ED;
   }
   &:hover {
-    border: 2px solid black;
+    color: white;
   }
 }
 
@@ -137,7 +137,7 @@ tbody {
   .content {
     background-color: white;
     margin: 10% 35%;
-    height: 250px;
+    height: 300px;
     display: flex;
     padding: 35px;
     flex-direction: column;
