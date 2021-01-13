@@ -47,7 +47,7 @@
             </span>
           </td>
         </tr>
-        <tr class="new-player">
+        <tr class="new-player" (click)="showPlayers()">
           <td>Add Players</td>
           <td *ngFor="let el of floors" class="random">0</td>
           <td class="column-players">0</td>
