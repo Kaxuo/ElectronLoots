@@ -11,6 +11,7 @@ export class WebRequestService {
 
   constructor(private http: HttpClient) {
     this.ROOT_URL = 'http://localhost:5000';
+    // this.ROOT_URL = 'http://localhost:8001';
   }
 
   getAllPlayers() {
@@ -39,6 +40,13 @@ export class WebRequestService {
   addFloors(payload: Floors) {
     return this.http.post(
       `${this.ROOT_URL}/api/joinedtable/addfloors`,
+      payload
+    );
+  }
+
+  modifyValue(userId: number, floorId: number, payload: { value: number }) {
+    return this.http.put(
+      `${this.ROOT_URL}/api/joinedtable/${userId}/${floorId}/update`,
       payload
     );
   }

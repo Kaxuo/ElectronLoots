@@ -49,8 +49,6 @@ export class TableComponent implements OnInit {
           };
         });
         this.floors = result[1];
-        console.log(this.floors);
-        console.log(this.players);
       });
   }
 
@@ -78,6 +76,18 @@ export class TableComponent implements OnInit {
         });
         this.closeModal();
       });
+  }
+
+  modifyValue(floor, event, indexPlayer, indexFloor) {
+    let newValue = parseInt(event.target.value) || 0;
+    this.PlayersFloors.modifyValue(floor.userId, floor.floorId, {
+      value: newValue,
+    }).subscribe(() => {
+      this.players[indexPlayer].floors[indexFloor].value = newValue;
+      this.players[indexPlayer].total = this.players[indexPlayer].floors
+        .map((floor) => floor.value)
+        .reduce((a, b) => a + b, 0);
+    });
   }
 
   showPlayers() {
@@ -118,6 +128,7 @@ export class TableComponent implements OnInit {
     this.modalAddPlayer = false;
     this.modalAddFloor = false;
     this.addPlayerForm.reset();
+    this.addFloorForm.reset();
   }
 
   @HostListener('click', ['$event'])

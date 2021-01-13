@@ -50,12 +50,6 @@ tbody {
     position: relative;
     &:hover {
       &:before {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: -9999px;
-        bottom: -9999px;
         background-color: rgba(255, 255, 255, 0.2);
         z-index: -1;
       }
@@ -114,6 +108,12 @@ tbody {
   &:hover {
     border: 2px solid black;
   }
+}
+
+.mat-input {
+  width: 70px;
+  text-align: center;
+  margin: auto;
 }
 
 .isShown {

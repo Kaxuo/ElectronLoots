@@ -15,7 +15,7 @@
       <thead>
         <tr>
           <th class="column-players">Players</th>
-          <th class="column-title"*ngFor="let el of floors">
+          <th class="column-title" *ngFor="let el of floors">
             {{ el.name }}
             <span class="material-icons delete-col" (click)="deleteColumn(el)">
               delete_forever
@@ -26,9 +26,20 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let el of players">
+        <tr *ngFor="let el of players; let indexPlayer = index">
           <td class="players-rows">{{ el.name }}</td>
-          <td *ngFor="let floor of el.floors">{{ floor.value }}</td>
+          <td *ngFor="let floor of el.floors; let indexFloor = index">
+            <mat-form-field class="mat-input">
+              <input
+                (input)="modifyValue(floor, $event, indexPlayer, indexFloor)"
+                matInput
+                type="number"
+                name="value"
+                [value]="floor.value"
+                min="0"
+              />
+            </mat-form-field>
+          </td>
           <td class="total-rows">{{ el.total }}</td>
           <td class="delete-rows">
             <span class="material-icons delete-pl" (click)="deletePlayers(el)">
@@ -36,7 +47,7 @@
             </span>
           </td>
         </tr>
-        <tr class="new-player" (click)="showPlayers()">
+        <tr class="new-player">
           <td>Add Players</td>
           <td *ngFor="let el of floors" class="random">0</td>
           <td class="column-players">0</td>

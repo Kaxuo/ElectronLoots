@@ -31,4 +31,8 @@ export class PlayersFloorsService {
   addFloors(payload: Players) {
     return this.webRequest.addFloors(payload);
   }
+
+  modifyValue(userId: number, floorId: number, payload: { value: number }) {
+    return this.webRequest.modifyValue(userId, floorId, payload);
+  }
 }
