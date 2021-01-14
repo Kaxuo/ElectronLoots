@@ -35,6 +35,9 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
 .background-container {
   position: fixed;
   z-index: -1;
@@ -104,4 +107,4 @@ em {
 }
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";

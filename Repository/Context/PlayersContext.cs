@@ -6,22 +6,41 @@ namespace Loots.Repository.Context
 {
     public class PlayersContext : DbContext
     {
+        public DbSet<Tables> Tables { get; set; }
         public DbSet<Players> Players { get; set; }
         public DbSet<Floors> Floors { get; set; }
         public DbSet<PlayersFloors> PlayersFloors { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PlayersFloors>().HasKey(x => new { x.UserId, x.FloorId });
+
+            modelBuilder.Entity<Tables>()
+            .HasMany<Players>(t => t.Players)
+            .WithOne(p => p.Tables)
+            .HasForeignKey(t => t.TableId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Tables>()
+           .HasMany<Floors>(t => t.Floors)
+           .WithOne(p => p.Tables)
+           .HasForeignKey(t => t.TableId)
+           .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Tables>()
+            .HasMany<PlayersFloors>(t => t.PlayersFloors)
+            .WithOne(p => p.Tables)
+            .HasForeignKey(t => t.TableId)
+            .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<PlayersFloors>()
             .HasOne(pc => pc.Players)
             .WithMany(p => p.Floors)
-            .OnDelete(DeleteBehavior.Cascade)
-            .HasForeignKey(pc => pc.UserId);
+            .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<PlayersFloors>()
             .HasOne(pc => pc.Floors)
             .WithMany(f => f.Players)
-            .OnDelete(DeleteBehavior.Cascade)
-            .HasForeignKey(pc => pc.FloorId);
+            .OnDelete(DeleteBehavior.Cascade);
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

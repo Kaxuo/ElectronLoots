@@ -8,6 +8,18 @@ import { WebRequestService } from './web-request.service';
 export class PlayersFloorsService {
   constructor(private webRequest: WebRequestService) {}
 
+  getAllTables() {
+    return this.webRequest.getAllTables();
+  }
+
+  addTable(payload: { name: string }) {
+    return this.webRequest.addTable(payload);
+  }
+
+  deleteTable(id: number) {
+    return this.webRequest.deleteTables(id);
+  }
+
   getAllPlayers() {
     return this.webRequest.getAllPlayers();
   }
@@ -24,15 +36,20 @@ export class PlayersFloorsService {
     return this.webRequest.deleteFloors(id);
   }
 
-  addPlayers(payload: Players) {
-    return this.webRequest.addPlayers(payload);
+  addPlayers(id: number, payload: Players) {
+    return this.webRequest.addPlayers(id, payload);
   }
 
-  addFloors(payload: Players) {
-    return this.webRequest.addFloors(payload);
+  addFloors(id: number, payload: Players) {
+    return this.webRequest.addFloors(id, payload);
   }
 
-  modifyValue(userId: number, floorId: number, payload: { value: number }) {
-    return this.webRequest.modifyValue(userId, floorId, payload);
+  modifyValue(
+    tableId: number,
+    userId: number,
+    floorId: number,
+    payload: { value: number }
+  ) {
+    return this.webRequest.modifyValue(tableId, userId, floorId, payload);
   }
 }

@@ -1,8 +1,9 @@
-<div class="body">
-  <div class="container">
+<div #container class="body">
+  <div *ngFor="let table of tables" class="container">
+    <h1 class="title">{{ table.name }}</h1>
     <div class="buttons">
       <button
-        (click)="showFloors()"
+        (click)="showFloors(table.id)"
         mat-button
         class="first-button"
         mat-raised-button
@@ -15,14 +16,14 @@
       <thead>
         <tr>
           <th class="column-players">Players</th>
-          <th class="column-title" *ngFor="let el of floors">
+          <th class="column-title" *ngFor="let el of table.floors">
             {{ el.name }}
             <span
               class="material-icons delete-col"
               mwlConfirmationPopover
               popoverTitle="Are you sure you want to delete {{ el.name }} ?"
-              placement="right"
-              (confirm)="deleteColumn(el)"
+              placement="top"
+              (confirm)="deleteColumn(table, el)"
               (cancel)="cancelClicked = true"
             >
               delete_forever
@@ -33,12 +34,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let el of players; let indexPlayer = index">
+        <tr *ngFor="let el of table.players; let indexPlayer = index">
           <td class="players-rows">{{ el.name }}</td>
           <td *ngFor="let floor of el.floors; let indexFloor = index">
             <mat-form-field class="mat-input">
               <input
-                (input)="modifyValue(floor, $event, indexPlayer, indexFloor)"
+                (input)="modifyValue(table.id,floor, $event, indexPlayer, indexFloor)"
                 matInput
                 type="number"
                 name="value"
@@ -52,8 +53,8 @@
             <span
               mwlConfirmationPopover
               popoverTitle="Are you sure you want to delete {{ el.name }} ?"
-              placement="right"
-              (confirm)="deletePlayers(el)"
+              placement="left"
+              (confirm)="deletePlayers(table, el)"
               (cancel)="cancelClicked = true"
               class="material-icons delete-pl"
             >
@@ -61,14 +62,32 @@
             </span>
           </td>
         </tr>
-        <tr class="new-player" (click)="showPlayers()">
-          <td>Add Players</td>
-          <td *ngFor="let el of floors" class="random">0</td>
+        <tr class="new-player" (click)="showPlayers(table.id)">
+          <td>New</td>
+          <td *ngFor="let el of table.floors" class="random">0</td>
           <td class="column-players">0</td>
           <td class="delete-players">/////</td>
         </tr>
+        <tr
+          class="delete-table"
+          mwlConfirmationPopover
+          popoverTitle="Are you sure you want to delete The entire table ? ?"
+          placement="bottom"
+          (confirm)="deleteTable(table)"
+          (cancel)="cancelClicked = true"
+        >
+          <td><span class="material-icons"> clear </span></td>
+          <td *ngFor="let el of table.floors">
+            <span class="material-icons"> clear </span>
+          </td>
+          <td class=""><span class="material-icons"> clear </span></td>
+          <td class=""><span class="material-icons"> clear </span></td>
+        </tr>
       </tbody>
     </table>
+  </div>
+  <div class="buttons">
+    <a (click)="showTables()" class="btn effect01"><span>New Table</span></a>
   </div>
 </div>
 
@@ -83,7 +102,7 @@
     <h2>New Player</h2>
     <mat-form-field class="field" appearance="fill">
       <mat-label>Player's Name</mat-label>
-      <input #playerForm matInput formControlName="name" autofocus />
+      <input #playerForm matInput formControlName="name" />
     </mat-form-field>
     <em
       style="margin-bottom: 10px; padding-left: 60px"
@@ -95,6 +114,49 @@
     </em>
     <button
       [disabled]="addPlayerForm.invalid"
+      type="submit"
+      mat-button
+      class="first-button"
+      mat-raised-button
+      color="primary"
+    >
+      Create
+    </button>
+    <button
+      (click)="closeModal()"
+      mat-button
+      class="first-button"
+      mat-raised-button
+      color="warn"
+    >
+      Close
+    </button>
+  </div>
+</form>
+
+<form
+  class="modal"
+  *ngIf="modalAddTable == true"
+  [ngClass]="{ isShow: modalAddTable }"
+  (ngSubmit)="addTable(addTableForm.value)"
+  [formGroup]="addTableForm"
+>
+  <div class="content">
+    <h2>New Table</h2>
+    <mat-form-field class="field" appearance="fill">
+      <mat-label>Table's Name</mat-label>
+      <input #tableForm matInput formControlName="name" />
+    </mat-form-field>
+    <em
+      style="margin-bottom: 10px; padding-left: 60px"
+      *ngIf="
+        addPlayerForm.get('name').hasError('maxlength') &&
+        addPlayerForm.get('name').touched
+      "
+      >Too Long !
+    </em>
+    <button
+      [disabled]="addTableForm.invalid"
       type="submit"
       mat-button
       class="first-button"

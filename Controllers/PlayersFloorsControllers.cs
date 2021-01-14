@@ -7,19 +7,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Loots.Controllers
 {
-    [Route("api/joinedtable")]
+    [Route("api/joined")]
     [ApiController]
     public class PlayersFloorsControllers : ControllerBase
     {
         private readonly IPlayersFloors _values;
         private readonly IPlayers _playersRepository;
         private IFloors _floorsRepository;
+        private readonly ITables _tablesRepository;
 
-        public PlayersFloorsControllers(IPlayersFloors value, IPlayers players, IFloors floors)
+        public PlayersFloorsControllers(IPlayersFloors value, IPlayers players, IFloors floors, ITables tables)
         {
             _values = value;
             _playersRepository = players;
             _floorsRepository = floors;
+            _tablesRepository = tables;
         }
 
         [HttpGet]
@@ -29,12 +31,12 @@ namespace Loots.Controllers
             return Ok(players);
         }
 
-        [HttpGet("{userid}/{floorId}")]
-        public ActionResult<PlayersFloors> GetSingleRow(int userId, int floorId)
+        [HttpGet("{tableId}/{userid}/{floorId}")]
+        public ActionResult<PlayersFloors> GetSingleRow(int tableId, int userId, int floorId)
         {
             try
             {
-                var players = _values.GetSingleData(userId, floorId);
+                var players = _values.GetSingleData(tableId, userId, floorId);
                 return Ok(players);
             }
             catch (NotFoundException ex)
@@ -47,61 +49,17 @@ namespace Loots.Controllers
             }
         }
 
-        [HttpPut("{userid}/{floorId}/update")]
-        public ActionResult<PlayersFloors> UpdateSingleRow(int userId, int floorId, PlayersFloors newValue)
+        [HttpPut("{tableId}/{userid}/{floorId}")]
+        public ActionResult<PlayersFloors> UpdateSingleRow(int tableId, int userId, int floorId, PlayersFloors newValue)
         {
             try
             {
-                var players = _values.UpdateTable(userId, floorId, newValue.Value);
+                var players = _values.UpdateTable(tableId, userId, floorId, newValue.Value);
                 return Ok(players);
             }
             catch (NotFoundException ex)
             {
                 return NotFound(new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-        }
-
-        [HttpPost("addplayers")]
-        public ActionResult<Floors> AddPlayers(Players player)
-        {
-            try
-            {
-                var floors = _floorsRepository.GetAllFloors();
-                if (floors == null || !floors.Any())
-                {
-                    _playersRepository.AddPlayers(player);
-                }
-                if (floors.Any())
-                {
-                    _floorsRepository.AddPlayers(player);
-                }
-                return Ok(player);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-        }
-
-        [HttpPost("addfloors")]
-        public ActionResult<Players> AddFloors(Floors floor)
-        {
-            try
-            {
-                var players = _playersRepository.GetAllPlayers();
-                if (players == null || !players.Any())
-                {
-                    _floorsRepository.AddFloors(floor);
-                }
-                if (players.Any())
-                {
-                    _playersRepository.AddFloors(floor);
-                }
-                return Ok(floor);
             }
             catch (Exception ex)
             {

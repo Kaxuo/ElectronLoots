@@ -38,9 +38,10 @@ namespace Loots
             services.AddScoped<IPlayers, PlayersMethods>();
             services.AddScoped<IFloors, FloorsMethods>();
             services.AddScoped<IPlayersFloors, PlayersFloorsMethods>();
+            services.AddScoped<ITables, TablesMethods>();
             services.AddEntityFrameworkSqlite().AddDbContext<PlayersContext>();
             services.AddCors(options =>
-            options.AddPolicy("AllowAnyone", 
+            options.AddPolicy("AllowAnyone",
             builder => builder
             .AllowAnyOrigin()
             .AllowAnyMethod()

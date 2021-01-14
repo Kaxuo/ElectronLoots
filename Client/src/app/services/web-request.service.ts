@@ -14,6 +14,18 @@ export class WebRequestService {
     // this.ROOT_URL = 'http://localhost:8001';
   }
 
+  getAllTables() {
+    return this.http.get(`${this.ROOT_URL}/api/tables`);
+  }
+
+  deleteTables(id: number) {
+    return this.http.delete(`${this.ROOT_URL}/api/tables/${id}`);
+  }
+
+  addTable(payload: { name: string }) {
+    return this.http.post(`${this.ROOT_URL}/api/tables`, payload);
+  }
+
   getAllPlayers() {
     return this.http.get(`${this.ROOT_URL}/api/players`);
   }
@@ -30,23 +42,23 @@ export class WebRequestService {
     return this.http.delete(`${this.ROOT_URL}/api/floors/${id}`);
   }
 
-  addPlayers(payload: Players) {
+  addPlayers(id: number, payload: Players) {
     return this.http.post(
-      `${this.ROOT_URL}/api/joinedtable/addplayers`,
+      `${this.ROOT_URL}/api/tables/${id}/addplayers`,
       payload
     );
   }
 
-  addFloors(payload: Floors) {
+  addFloors(id: number, payload: Floors) {
     return this.http.post(
-      `${this.ROOT_URL}/api/joinedtable/addfloors`,
+      `${this.ROOT_URL}/api/tables/${id}/addfloors`,
       payload
     );
   }
 
-  modifyValue(userId: number, floorId: number, payload: { value: number }) {
+  modifyValue(tableId:number,userId: number, floorId: number, payload: { value: number }) {
     return this.http.put(
-      `${this.ROOT_URL}/api/joinedtable/${userId}/${floorId}/update`,
+      `${this.ROOT_URL}/api/joined/${tableId}/${userId}/${floorId}`,
       payload
     );
   }

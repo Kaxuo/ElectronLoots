@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using BackEnd;
 using BackEnd.Exceptions;
 using Loots.Models;
@@ -22,23 +23,27 @@ namespace Loots.Repository.DatabaseMethods
             return players;
         }
 
-        public PlayersFloors GetSingleData(int userId, int floorId)
+        public PlayersFloors GetSingleData(int tableId, int userId, int floorId)
         {
-            var player = _context.PlayersFloors.Find(userId, floorId);
-            if (player == null)
+            var singleTable = _context.Tables.Find(tableId);
+            if (singleTable == null)
             {
-                throw new NotFoundException("User or floor do not match, try again");
+                throw new NotFoundException("Table/User/floor do not match, try again");
             }
+            var table = _context.Tables.Include(t => t.PlayersFloors).FirstOrDefault(t => t.Id == tableId);
+            var player = table.PlayersFloors.FirstOrDefault(x => x.UserId == userId && x.FloorId == floorId);
             return player;
         }
 
-        public PlayersFloors UpdateTable(int userId, int floorId, int value)
+        public PlayersFloors UpdateTable(int tableId, int userId, int floorId, int value)
         {
-            var player = _context.PlayersFloors.Find(userId, floorId);
-            if (player == null)
+            var singleTable = _context.Tables.Find(tableId);
+            if (singleTable == null)
             {
-                throw new NotFoundException("User or floor do not match, try again");
+                throw new NotFoundException("Table/User/floor do not match, try again");
             }
+            var table = _context.Tables.Include(t => t.PlayersFloors).FirstOrDefault(t => t.Id == tableId);
+            var player = table.PlayersFloors.FirstOrDefault(x => x.UserId == userId && x.FloorId == floorId);
             if (value < 0)
             {
                 player.Value = 0;

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace Loots.Models
@@ -13,5 +14,8 @@ namespace Loots.Models
         [JsonIgnore]
         public Floors Floors { get; set; }
         public int Value { get; set; } = 0;
+        public int TableId { get; set; }
+        [JsonIgnore]
+        public Tables Tables { get; set; }
     }
 }
