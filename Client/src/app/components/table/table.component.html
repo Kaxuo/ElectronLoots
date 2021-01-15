@@ -1,4 +1,7 @@
-<div #container class="body">
+<ngx-spinner *ngIf="loading != false" type="ball-scale-ripple-multiple"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+<div *ngIf="loading == false" #container class="body">
   <div *ngFor="let table of tables" class="container">
     <h1 class="title">{{ table.name }}</h1>
     <div class="buttons">
@@ -39,7 +42,9 @@
           <td *ngFor="let floor of el.floors; let indexFloor = index">
             <mat-form-field class="mat-input">
               <input
-                (input)="modifyValue(table.id,floor, $event, indexPlayer, indexFloor)"
+                (input)="
+                  modifyValue(table.id, floor, $event, indexPlayer, indexFloor)
+                "
                 matInput
                 type="number"
                 name="value"

@@ -6,6 +6,7 @@ import { Players } from 'src/app/Models/Players';
 import { PlayersFloorsService } from 'src/app/services/players-floors.service';
 import { catchError, take } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-table',
@@ -35,13 +36,16 @@ export class TableComponent implements OnInit {
   modalAddTable: boolean = false;
   modalAddPlayer: boolean = false;
   modalAddFloor: boolean = false;
+  loading: boolean;
 
   constructor(
     private PlayersFloors: PlayersFloorsService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
+    this.spinner.show();
     let allPlayers = this.PlayersFloors.getAllPlayers();
     let allFloors = this.PlayersFloors.getAllFloors();
     let allTables = this.PlayersFloors.getAllTables();
@@ -76,6 +80,7 @@ export class TableComponent implements OnInit {
             }),
           };
         });
+        this.loading = false;
       });
   }
 
